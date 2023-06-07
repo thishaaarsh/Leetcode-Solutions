@@ -12,7 +12,7 @@ public:
             }
             mp[arr[i]] = i;
         }
-        return ans;
+        //return ans;
         
     }
 };
