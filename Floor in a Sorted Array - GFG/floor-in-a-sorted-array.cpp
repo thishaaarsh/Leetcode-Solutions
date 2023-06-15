@@ -14,7 +14,7 @@ class Solution{
         // Your code here
         long long lo = 0;
         long long hi = n-1;
-        if(arr[0] > x) return -1;
+        //if(arr[0] > x) return -1;
         long long ans = -1;
         while(lo<=hi){
             long long mid = (lo+hi)/2;
