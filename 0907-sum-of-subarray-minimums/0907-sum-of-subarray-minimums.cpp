@@ -6,7 +6,7 @@ public:
         int mod = 1e9+7;
         vector<int>pse(n,-1),nse(n,n);
         for(int i=0; i<n; i++){
-            while(s.empty() == false and arr[s.top()] > arr[i]){
+            while(s.empty() == false and arr[s.top()] >= arr[i]){
                 s.pop();
             }
             if(!s.empty()){
@@ -18,7 +18,7 @@ public:
             s.pop();
         }
         for(int i=n-1; i>=0; i--){
-            while(s.empty() == false and arr[s.top()] >= arr[i]){
+            while(s.empty() == false and arr[s.top()] > arr[i]){
                 s.pop();
             }
             if(!s.empty()){
