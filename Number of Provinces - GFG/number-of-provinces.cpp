@@ -8,11 +8,11 @@ using namespace std;
 
 class Solution {
   public:
-    void dfs(int node, vector<int>adj[],vector<int>&vis){
+    void dfs(int node, vector<vector<int>>&adj,vector<int>&vis,int n){
         vis[node] = 1;
-        for(auto it:adj[node]){
-            if(!vis[it]){
-                dfs(it,adj,vis);
+        for(int i=0; i<n; i++){
+            if(!vis[i] and adj[node][i] == 1){
+                dfs(i,adj,vis,n);
             }
         }
     }
@@ -30,7 +30,7 @@ class Solution {
         vector<int>vis(n,0);
         for(int i=0; i<n; i++){
             if(!vis[i]){
-                dfs(i,arr,vis);
+                dfs(i,adj,vis,n);
                 ans++;
             }
         }
