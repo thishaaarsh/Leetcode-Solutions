@@ -6,23 +6,14 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in an undirected graph.
-    bool solve(int src, vector<int>adj[], vector<int> &vis){
-        vis[src] = 1;
-        queue<pair<int,int>>q;
-        q.push({src,-1});
-        while(!q.empty()){
-            int node = q.front().first;
-            int parent = q.front().second;
-            q.pop();
-            for(auto it : adj[node]){
-                if(!vis[it]){
-                    q.push({it,node});
-                    vis[it] = 1;
-                }
-                else{
-                    if(it != parent)
-                        return true;
-                }
+    bool dfs(int node, vector<int>adj[],vector<int>&vis,int par){
+        vis[node] = 1;
+        for(auto it : adj[node]){
+            if(!vis[it]){
+                if(dfs(it,adj,vis,node)) return true;
+            }
+            else{
+                if(it != par) return true;
             }
         }
         return false;
@@ -32,8 +23,9 @@ class Solution {
         vector<int>vis(n,0);
         for(int i=0; i<n; i++){
             if(!vis[i]){
-                if(solve(i,adj,vis))
+                if(dfs(i,adj,vis,-1)){
                     return true;
+                }
             }
         }
         return false;
