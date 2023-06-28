@@ -1,45 +1,41 @@
 class Solution {
 public:
-    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
-
-        queue<pair<pair<int,int>,int>>q;
-        q.push({{0,0},1});
-        
-        if(grid[0][0]==1)return -1;
-        
-        if(grid[0][0]==0 && grid.size()==1 && grid[0].size()==1)return 1;
-        
-        vector<vector<bool>>visited(grid.size(),vector<bool>(grid.size(),false));
-        visited[0][0]=true;
-        while(!q.empty())
-        {
-            pair<int,int>p = q.front().first; 
-            int x = p.first; 
-            int y= p.second; 
-            int lengthOfPath = q.front().second; 
+    int shortestPathBinaryMatrix(vector<vector<int>>& arr) {
+        int n = arr.size();
+        int m = arr[0].size();
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        queue<pair<int,int>>q;
+        int ans = 1;
+        q.push({0,0});
+        vis[0][0] = 1;
+        //int delrow[] = {-1,1,0,0};
+        //int delcol[] = {0,0,1,-1};
+        if(arr[0][0] == 1 || arr[n-1][m-1] == 1) return -1;
+        if(n==1 and m == 1) return 1;
+        while(!q.empty()){
+            int size = q.size();
+            ans++;
+            for(int k=0; k<size; k++){
+            int row = q.front().first;
+            int col = q.front().second;
             q.pop();
             
-            vector<pair<int,int>>neighbours = {{0,1}, {0,-1}, {1,0}, {-1,0},
-                                               {1,1}, {-1,-1}, {1,-1}, {-1,1}};
+            for(int j=-1; j<=1; j++){
+                for(int i=-1; i<=1; i++){
+                    int nrow = row+i;
+                    int ncol = col+j;
+                    if(nrow == n-1 and ncol == m-1) return ans;
+                    if(nrow >=0 and ncol >=0 and nrow<n and ncol <m and 
+                        !vis[nrow][ncol] and arr[nrow][ncol] == 0){
+                            q.push({nrow,ncol});
+                            vis[nrow][ncol] = 1;
+                     }
+                }
             
-            for(pair<int,int>neighbour: neighbours)
-            {
-                int newx = neighbour.first + x;
-                int newy = neighbour.second+ y;
-                
-         if(newx>=0 && newy>=0 && newx<grid.size() && newy<grid[0].size() && grid[newx][newy]==0 && !visited[newx][newy]){
-
-                    q.push({{newx,newy},lengthOfPath+1});
-                    visited[newx][newy] = true;
-                    
-                    if(newx==grid.size()-1 && newy==grid[0].size()-1)
-                     return lengthOfPath+1;
-           
-                }      
             }
         }
         
+        }
         return -1;
-        
     }
 };
