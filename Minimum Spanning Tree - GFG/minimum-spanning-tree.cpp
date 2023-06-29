@@ -35,6 +35,20 @@ class DisjointSet{
                 rank[ulp_u]++;
             }
         }
+        
+        void unionBySize(int u, int v){
+            int ulp_u = findUPar(u);
+            int ulp_v = findUPar(v);
+            
+            if(size[ulp_u] > size[ulp_v]){
+                parent[ulp_v] = ulp_u;
+                size[ulp_u]+=size[ulp_v];
+            }
+            else{
+                parent[ulp_u] = ulp_v;
+                size[ulp_v]+=size[ulp_u];
+            }
+        }
 };
 class Solution
 {
@@ -61,7 +75,7 @@ class Solution
             int v = it.second.second;
             if(ds.findUPar(u) != ds.findUPar(v)){
                 ans+=wt;
-                ds.unionByRank(u,v);
+                ds.unionBySize(u,v);
             }
         }
         return ans;
