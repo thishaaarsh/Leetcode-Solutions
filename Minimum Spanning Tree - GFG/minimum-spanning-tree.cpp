@@ -3,6 +3,39 @@
 using namespace std;
 
 // } Driver Code Ends
+
+class DisjointSet{
+    public :
+        vector<int>rank,size,parent;
+        DisjointSet(int n){
+            rank.resize(n+1,0);
+            size.resize(n+1,1);
+            parent.resize(n+1);
+            for(int i=0; i<=n; i++){
+                parent[i] = i;
+            }
+        }
+        
+        int findUPar(int node){
+            if(node == parent[node]) return node;
+            return parent[node] = findUPar(parent[node]);
+        }
+        
+        void unionByRank(int u, int v){
+            int ulp_u = findUPar(u);
+            int ulp_v = findUPar(v);
+            if(rank[ulp_u] < rank[ulp_v]){
+                parent[ulp_u] = ulp_v;
+            }
+            else if(rank[ulp_u] > rank[ulp_v]){
+                parent[ulp_v] = ulp_u;
+            }
+            else{
+                parent[ulp_v] = ulp_u;
+                rank[ulp_u]++;
+            }
+        }
+};
 class Solution
 {
 	public:
@@ -10,27 +43,28 @@ class Solution
     int spanningTree(int V, vector<vector<int>> adj[])
     {
         // code here
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>>q;
-        q.push({0,0});
-        vector<int>vis(V,0);
-        int sum = 0;
-        while(!q.empty()){
-            auto it = q.top();
-            q.pop();
-            int node = it.second;
-            int wt = it.first;
-            if(vis[node]) continue;
-            vis[node] = 1;
-            sum+=wt;
-            for(auto it : adj[node]){
-                int adjNode = it[0];
-                int edgeWt = it[1];
-                if(!vis[adjNode]){
-                    q.push({edgeWt,adjNode});
-                }
+        vector<pair<int,pair<int,int>>>arr;
+        for(int i=0; i<V; i++){
+            for(auto it:adj[i]){
+                int u = i;
+                int v = it[0];
+                int wt = it[1];
+                arr.push_back({wt,{u,v}});
             }
         }
-        return sum;
+        sort(arr.begin(),arr.end());
+        DisjointSet ds(V);
+        int ans = 0;
+        for(auto it : arr){
+            int wt = it.first;
+            int u = it.second.first;
+            int v = it.second.second;
+            if(ds.findUPar(u) != ds.findUPar(v)){
+                ans+=wt;
+                ds.unionByRank(u,v);
+            }
+        }
+        return ans;
     }
 };
 
