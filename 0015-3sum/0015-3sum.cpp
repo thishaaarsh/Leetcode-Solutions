@@ -1,30 +1,29 @@
 class Solution {
 public:
-    vector<vector<int>> threeSum(vector<int>& arr) {
-        int n = arr.size();
-        sort(arr.begin(), arr.end());
-        vector<vector<int>> ans;
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n = nums.size();
+        sort(nums.begin(),nums.end());
+        vector<vector<int>>ans;
         for(int i=0; i<n; i++){
-            if(i==0 || arr[i] != arr[i-1]){
+            if(i==0 || nums[i] != nums[i-1]){
                 int lo = i+1;
                 int hi = n-1;
                 while(lo<hi){
-                    if(arr[i]+arr[lo]+arr[hi] == 0){
-                        vector<int>temp;
-                        temp.push_back(arr[i]);
-                        temp.push_back(arr[lo]);
-                        temp.push_back(arr[hi]);
+                    if(nums[i]+nums[lo]+nums[hi] == 0){
+                        vector<int>temp({nums[i],nums[lo],nums[hi]});
+                    
                         ans.push_back(temp);
-                        while(lo<hi and arr[lo] == arr[lo+1]) lo++;
-                        while(lo<hi and arr[hi] == arr[hi-1]) hi--;
+                        while(lo<hi and nums[lo]==nums[lo+1]) lo++;
+                        while(lo<hi and nums[hi] == nums[hi-1]) hi--;
                         lo++;
                         hi--;
                     }
-                    else if(arr[i]+arr[lo]+arr[hi] < 0) lo++;
-                    else hi--;
+                    else if(nums[i]+nums[lo]+nums[hi] > 0) hi--;
+                    else lo++;
                 }
             }
         }
         return ans;
+        
     }
 };
