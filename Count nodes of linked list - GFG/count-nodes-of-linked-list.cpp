@@ -31,12 +31,12 @@ class Solution
     int getCount(struct Node* head){
     
         //Code here
-        int n = 0;
+        int cnt = 0;
         while(head){
             head = head->next;
-            n++;
+            cnt++;
         }
-        return n;
+        return cnt;
     
     }
 };
