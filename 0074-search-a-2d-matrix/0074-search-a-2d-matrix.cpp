@@ -4,18 +4,14 @@ public:
         int n = arr.size();
         int m = arr[0].size();
         if(n==0) return false;
-        int lo = 0, hi=m*n-1;
-        while(lo<=hi){
-            int mid = (lo+hi)>>1;
-            int row = mid/m;
-            int col = mid%m;
-            if(arr[row][col] == k){
-                return true;
+        int i=0,j=m-1;
+        while(i<n and j>=0){
+            if(arr[i][j] == k) return true;
+            else if(arr[i][j] > k){
+                j--;
             }
-            else if(arr[row][col] > k)
-                hi = mid-1;
-            else lo = mid+1;
-            
+            else
+                i++;
         }
         return false;
     }
