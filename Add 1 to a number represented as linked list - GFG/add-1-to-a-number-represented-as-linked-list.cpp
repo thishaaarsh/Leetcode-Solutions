@@ -18,7 +18,7 @@ struct Node
 void printList(Node* node) 
 { 
     while (node != NULL) { 
-        cout << node->data; 
+        cout << node->data%10; 
         node = node->next; 
     }  
     cout<<"\n";
@@ -43,12 +43,12 @@ struct Node
 
 */
 
+
 class Solution
 {
     public:
-    Node *rev(Node *head){
-        if(head == NULL || head->next == NULL)
-            return head;
+    
+    Node *reverse(Node *head){
         Node *prev = NULL;
         while(head){
             Node *next = head->next;
@@ -62,27 +62,26 @@ class Solution
     {
         // Your Code here
         // return head of list after adding one
-        head = rev(head);
-        bool carry = true;
-        Node *curr = head;
-        while(curr and carry){
-            if(curr->next == NULL and curr->data == 9){
-                curr->data = 1;
-                Node *node = new Node(0);
-                node->next = head;
-                head = node;
-                carry = false;
-            }
-            else if(curr->data == 9){
-                curr->data = 0;
-                curr = curr->next;
-            }
-            else{
-                curr->data = curr->data+1;
-                carry = false;
-            }
+        if(head == NULL){
+            Node *n = new Node(1);
+            return n;
         }
-        head = rev(head);
+        Node *rev = reverse(head);
+        Node *curr = rev;
+        int carry = 1;
+        Node *prev;
+        while(curr){
+            prev = curr;
+            int a = curr->data+carry;
+            curr->data = a%10;
+            carry = a/10;
+            curr = curr->next;
+            if(carry == 0) break;
+        }
+        if(carry){
+            prev->next = new Node(1);
+        }
+        head = reverse(rev);
         return head;
     }
 };
