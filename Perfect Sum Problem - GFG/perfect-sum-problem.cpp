@@ -8,10 +8,11 @@ class Solution{
 	public:
 	int mod = 1e9+7;
 	int solve(int arr[], int n, int sum,int i,vector<vector<int>>&dp){
-	    if(i>n || sum<0) return 0;
+	    
 	    if(i==n and sum == 0){
 	        return 1;
 	    }
+	    if(i>n || sum<0) return 0;
 	    if(dp[i][sum] != -1) return dp[i][sum];
 	    int a = solve(arr,n,sum,i+1,dp);
 	    int b = solve(arr,n,sum-arr[i],i+1,dp);
