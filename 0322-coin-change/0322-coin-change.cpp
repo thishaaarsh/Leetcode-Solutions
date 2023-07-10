@@ -8,11 +8,36 @@ public:
         int nottake = solve(i-1,arr,k,dp);
         return dp[i][k] = min(take,nottake);
     }
-    int coinChange(vector<int>& coins, int amount) {
-        int n = coins.size();
-        vector<vector<int>>dp(n,vector<int>(amount+1,-1));
-       int ans = solve(n-1,coins,amount,dp);
-        if(ans >= 1e9) return -1;
-        else return ans;
+    int coinChange(vector<int>& arr, int k){
+        int n = arr.size();
+        vector<vector<int>>dp(n,vector<int>(k+1,0));
+       //int ans = solve(n-1,coins,amount,dp);
+        for(int i=0; i<n; i++){
+            for(int j=0; j<=k; j++){
+                if(j==0){
+                    dp[i][j] = 0;
+                }
+                else if(i==0){
+                    if(j%arr[i] == 0){
+                        dp[i][j] = j/arr[i];
+                    }
+                    else{
+                        dp[i][j] = 1e9;
+                    }
+                }
+                else{
+                    int nottake = dp[i-1][j];
+                    int take = 1e9;
+                    if(arr[i] <= j){
+                        take = 1+dp[i][j-arr[i]];
+                    }
+                    dp[i][j] = min(take,nottake);
+                }
+                
+            }
+        }
+        if(dp[n-1][k] >= 1e9) return -1;
+        return dp[n-1][k];
     }
+    
 };
