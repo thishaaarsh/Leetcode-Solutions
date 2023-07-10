@@ -14,12 +14,16 @@ public:
         vector<vector<int>>dp(n+1,vector<int>(t+1,0));
         for(int i=0; i<n; i++){
             for(int j=0; j<=t;j++){
+                if(i==0 and j==0  and arr[0] == 0){
+                    dp[0][0] = 2;
+                    continue;
+                }
                 if(j==0){
-                    dp[i][j]++;
+                    dp[i][j] = 1;
                 }
                 if(i==0){
                     if(arr[i] == j){
-                        dp[i][j]++;
+                        dp[i][j] = 1;
                     }
                 }
                 else{
