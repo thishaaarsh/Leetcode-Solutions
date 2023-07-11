@@ -10,7 +10,7 @@ public:
         s.pop_back();
         s.push_back(')');
         solve(i,j+1,n,s,ans);
-        s.pop_back();
+       // s.pop_back();
     }
     vector<string> generateParenthesis(int n) {
         vector<string>ans;
