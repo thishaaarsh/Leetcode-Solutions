@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void solve(int i, int j, int n, string &s, vector<string>&ans){
+    void solve(int i, int j, int n, string s, vector<string>&ans){
         if(j>i || i>n || j>n) return;
         if(i==n and j==n){
             ans.push_back(s);
