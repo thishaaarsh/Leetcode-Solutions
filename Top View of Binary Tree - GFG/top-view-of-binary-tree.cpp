@@ -107,22 +107,23 @@ class Solution
         //Your code here
         vector<int>ans;
         if(root == NULL) return ans;
-        map<int,int>mp;
+        // root,vertival;
         queue<pair<Node*,int>>q;
         q.push({root,0});
+        map<int,int>mp;
         while(!q.empty()){
-            Node* curr = q.front().first;
-            int level = q.front().second;
+            Node* node = q.front().first;
+            int lev = q.front().second;
             q.pop();
-            if(mp.find(level) == mp.end()) mp[level] = curr->data;
-            if(curr->left){
-                q.push({curr->left,level-1});
+            if(mp.find(lev) == mp.end()) mp[lev] = node->data;
+            if(node->left){
+                q.push({node->left,lev-1});
             }
-            if(curr->right){
-                q.push({curr->right,level+1});
+            if(node->right){
+                q.push({node->right,lev+1});
             }
         }
-        for(auto it:mp){
+        for(auto it : mp){
             ans.push_back(it.second);
         }
         return ans;
