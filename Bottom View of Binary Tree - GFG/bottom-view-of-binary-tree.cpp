@@ -99,21 +99,20 @@ class Solution {
         // Your Code Here
         vector<int>ans;
         if(root == NULL) return ans;
-        queue<pair<Node*, int>>q;
+        //vertival,root
+        queue<pair<int,Node*>>q;
+        q.push({0,root});
         map<int,int>mp;
-        q.push({root,0});
         while(!q.empty()){
-            Node *curr = q.front().first;
-            int ver = q.front().second;
+            auto it  = q.front();
             q.pop();
-            mp[ver] = curr->data;
-            if(curr->left){
-                q.push({curr->left,ver-1});
-            }
-            if(curr->right){
-                q.push({curr->right,ver+1});
-            }
-            
+            Node *node = it.second;
+            int lev = it.first;
+            mp[lev] = node->data;
+            if(node->left)
+                q.push({lev-1,node->left});
+            if(node->right)
+                q.push({lev+1,node->right});
         }
         for(auto it : mp){
             ans.push_back(it.second);
