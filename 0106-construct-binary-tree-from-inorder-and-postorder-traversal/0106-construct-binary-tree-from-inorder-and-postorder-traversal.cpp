@@ -11,22 +11,23 @@
  */
 class Solution {
 public:
-    TreeNode* solve(vector<int>& in, int is, int ie, vector<int>& po, int ps, int pe, 
-                    unordered_map<int,int>&mp){
-        if(ps>pe || is>ie) return NULL;
-        TreeNode *root = new TreeNode(po[pe]);
-        int inroot = mp[root->val];
-        int left = inroot-is;
-        root->left = solve(in,is,inroot-1, po, ps, ps+left-1,mp);
-        root->right = solve(in, inroot+1, ie, po, ps+left, pe-1, mp);
+    TreeNode *solve(vector<int>& inorder, int instart, int inend, 
+                    vector<int>& postorder,int poststart,int postend,
+                   unordered_map<int,int>&mp){
+        if(instart > inend  || poststart > postend) return NULL;
+        TreeNode *root = new TreeNode(postorder[postend]);
+        int rootidx = mp[root->val];
+        int left = rootidx-instart;
+        root->left = solve(inorder,instart,rootidx-1,postorder,poststart,poststart+left-1,mp);
+        root->right = solve(inorder,rootidx+1,inend, postorder,poststart+left,postend-1,mp);
         return root;
     }
-    TreeNode* buildTree(vector<int>& in, vector<int>& po) {
-        if(in.size() != po.size()) return NULL;
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
         unordered_map<int,int>mp;
-        for(int i=0; i<in.size();i++){
-            mp[in[i]] = i;
+        for(int i=0; i<inorder.size();i++){
+            mp[inorder[i]] = i;
         }
-        return solve(in, 0, in.size()-1, po, 0, po.size()-1, mp);
+        TreeNode *root = solve(inorder,0,inorder.size()-1, postorder, 0, postorder.size()-1, mp);
+        return root;
     }
 };
