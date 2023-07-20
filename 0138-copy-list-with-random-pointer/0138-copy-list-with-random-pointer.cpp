@@ -23,10 +23,10 @@ public:
             mp[curr] = new Node(curr->val);
             curr = curr->next;
         }
-        //Node *clone = NULL;
+        Node *clone = NULL;
         curr = head;
         while(curr){
-            Node *clone = mp[curr];
+            clone = mp[curr];
             clone->next = mp[curr->next];
             clone->random = mp[curr->random];
             curr = curr->next;
