@@ -22,9 +22,9 @@ public:
             curr = next;
             c++;
         }
-        if(curr!=NULL){
+        
             head->next = revinK(curr,count-k,k);
-        }
+        
         return prev;
         
     }
