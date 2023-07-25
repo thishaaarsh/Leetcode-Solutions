@@ -10,30 +10,31 @@
  */
 class Solution {
 public:
-    ListNode *rev(ListNode* head, int k,int count){
-        if(count < k) return head;
-        ListNode *curr = head,*next =NULL,*prev=NULL;
+    ListNode *revinK(ListNode *head, int count, int k){
+        if(head == NULL || count < k) return head;
+        ListNode *curr = head;
+        ListNode *prev = NULL;
         int c = 0;
-        while(c<k){
-            next = curr->next;
+        while(curr and c<k){
+            ListNode *next = curr->next;
             curr->next = prev;
             prev = curr;
             curr = next;
             c++;
         }
-        if(next != NULL){
-            ListNode *reshead = rev(next,k,count-k);
-            head->next = reshead;
+        if(curr!=NULL){
+            head->next = revinK(curr,count-k,k);
         }
         return prev;
+        
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
+        int count =0;
         ListNode *curr = head;
-        int count = 0;
         while(curr){
             count++;
             curr = curr->next;
         }
-        return rev(head,k,count);
+        return revinK(head,count,k);
     }
 };
