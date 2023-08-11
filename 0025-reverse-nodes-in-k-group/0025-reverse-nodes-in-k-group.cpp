@@ -10,28 +10,29 @@
  */
 class Solution {
 public:
-    ListNode *revink(ListNode *head, int count, int k){
-        if(count < k || head == NULL) return head;
-        ListNode *curr = head;
+    ListNode *solve(ListNode *head,int k,int count){
+        if(head == NULL || count < k) return head;
         ListNode *prev = NULL;
-        int p = k;
-        while(curr and p){
+        ListNode *curr = head;
+        int a = k;
+        while(curr and a--){
             ListNode *next = curr->next;
             curr->next = prev;
             prev = curr;
             curr = next;
-            p--;
         }
-        head->next = revink(curr,count-k, k);
+        head->next = solve(curr,k,count-k);
         return prev;
+        
+        
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
-        int count = 0;
         ListNode *curr = head;
+        int count = 0;
         while(curr){
-            count++;
             curr = curr->next;
+            count++;
         }
-        return revink(head,count,k);
+        return solve(head,k,count);
     }
 };
