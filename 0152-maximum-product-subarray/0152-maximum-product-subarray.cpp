@@ -9,8 +9,8 @@ public:
             if(arr[i] < 0){
                 swap(maxi,mini);
             }
-            maxi = max(arr[i],arr[i]*maxi);
-            mini = min(arr[i],arr[i]*mini);
+            maxi = max(maxi*arr[i],arr[i]);
+            mini = min(mini*arr[i],arr[i]);
             ans = max(ans,maxi);
         }
         return ans;
