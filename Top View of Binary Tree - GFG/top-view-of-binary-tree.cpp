@@ -106,21 +106,19 @@ class Solution
     {
         //Your code here
         vector<int>ans;
-        if(root == NULL) return ans;
-        // root,vertival;
-        queue<pair<Node*,int>>q;
-        q.push({root,0});
         map<int,int>mp;
+        queue<pair<int,Node*>>q;
+        q.push({0,root});
         while(!q.empty()){
-            Node* node = q.front().first;
-            int lev = q.front().second;
+            Node *node = q.front().second;
+            int ver = q.front().first;
             q.pop();
-            if(mp.find(lev) == mp.end()) mp[lev] = node->data;
+            if(mp.find(ver) == mp.end()) mp[ver] = node->data;
             if(node->left){
-                q.push({node->left,lev-1});
+                q.push({ver-1,node->left});
             }
             if(node->right){
-                q.push({node->right,lev+1});
+                q.push({ver+1,node->right});
             }
         }
         for(auto it : mp){
