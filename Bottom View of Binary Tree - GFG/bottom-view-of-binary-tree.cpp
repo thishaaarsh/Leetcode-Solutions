@@ -97,22 +97,21 @@ class Solution {
   public:
     vector <int> bottomView(Node *root) {
         // Your Code Here
-        vector<int>ans;
-        if(root == NULL) return ans;
-        //vertival,root
+         vector<int>ans;
+        map<int,int>mp;
         queue<pair<int,Node*>>q;
         q.push({0,root});
-        map<int,int>mp;
         while(!q.empty()){
-            auto it  = q.front();
+            Node *node = q.front().second;
+            int ver = q.front().first;
             q.pop();
-            Node *node = it.second;
-            int lev = it.first;
-            mp[lev] = node->data;
-            if(node->left)
-                q.push({lev-1,node->left});
-            if(node->right)
-                q.push({lev+1,node->right});
+            mp[ver] = node->data;
+            if(node->left){
+                q.push({ver-1,node->left});
+            }
+            if(node->right){
+                q.push({ver+1,node->right});
+            }
         }
         for(auto it : mp){
             ans.push_back(it.second);
