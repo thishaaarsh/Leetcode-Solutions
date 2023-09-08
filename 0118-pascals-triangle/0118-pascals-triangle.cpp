@@ -1,22 +1,21 @@
 class Solution {
 public:
-    vector<int> solve(int i){
-        vector<int>ans;
-        ans.push_back(1);
-        for(int j=1; j<i; j++){
-            int res = ans.back()*(i-j);
-            res = res/j;
-            ans.push_back(res);
+    vector<int>solve(int n){
+        vector<int>res;
+        res.push_back(1);
+        int ans = 1;
+        for(int i=1; i<n; i++){
+            ans*=(n-i);
+            ans/=i;
+            res.push_back(ans);
         }
-        return ans;
+        return res;
     }
     vector<vector<int>> generate(int n) {
         vector<vector<int>>ans;
         for(int i=1; i<=n; i++){
-            vector<int>a = solve(i);
-            ans.push_back(a);
+            ans.push_back(solve(i));
         }
         return ans;
-        
     }
 };
